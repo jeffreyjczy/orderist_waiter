@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frameLayout,fragment)
         fragmentTransaction.commit()
 
+        val hello = ""
 
     }
 
