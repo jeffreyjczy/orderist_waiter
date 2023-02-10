@@ -15,7 +15,6 @@ class HistoryTable : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         return inflater.inflate(R.layout.fragment_history_table, container, false)
     }
 
@@ -24,6 +23,10 @@ class HistoryTable : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 
 
 }
