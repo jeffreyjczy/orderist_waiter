@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Order">
+    tools:context=".OrderFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
         android:text="Create Order"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,5 +26,54 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="350dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="28dp"
+        android:orientation="horizontal"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropdownTable">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="500dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_custom_background"
+            android:includeFontPadding="false"
+            android:paddingStart="10dp"
+            android:text="Menu"
+            android:textAlignment="textStart" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/my_custom_background"
+            android:text="Quantity"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderView"
+        android:layout_width="350dp"
+        android:layout_height="508dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="343dp"
+        android:layout_height="43dp"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

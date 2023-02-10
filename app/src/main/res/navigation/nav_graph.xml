@@ -6,7 +6,7 @@
     app:startDestination="@id/destination_order">
     <fragment
         android:id="@+id/destination_order"
-        android:name="com.example.orderistwaiter.Order"
+        android:name="com.example.orderistwaiter.OrderFragment"
         android:label="fragment_order"
         tools:layout="@layout/fragment_order" />
     <fragment
@@ -20,12 +20,12 @@
     </fragment>
     <fragment
         android:id="@+id/destination_serve"
-        android:name="com.example.orderistwaiter.Serve"
+        android:name="com.example.orderistwaiter.ServeFragment"
         android:label="fragment_serve"
         tools:layout="@layout/fragment_serve" />
     <fragment
         android:id="@+id/destination_historyTable"
-        android:name="com.example.orderistwaiter.HistoryTable"
+        android:name="com.example.orderistwaiter.HistoryTableFragment"
         android:label="fragment_history_table"
         tools:layout="@layout/fragment_history_table" />
 </navigation>
