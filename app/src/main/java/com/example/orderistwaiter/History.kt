@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.example.orderistwaiter.databinding.FragmentHistoryBinding
 import kotlinx.android.synthetic.main.fragment_history.*
 
 class History : Fragment() {
@@ -27,10 +24,7 @@ class History : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         historyTestBtn.setOnClickListener {
-            val nextAction = HistoryDirections.nextAction()
-
-            Navigation.findNavController(it).navigate(nextAction)
-//            Navigation.findNavController(it).navigate(R.id.destination_historyTable)
+            Navigation.findNavController(it).navigate(R.id.destination_historyTable)
         }
 
     }

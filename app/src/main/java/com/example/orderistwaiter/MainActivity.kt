@@ -15,10 +15,31 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+            navController = navHostFragment.navController
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-
         setupWithNavController(bottomNavigationView, navController)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.destination_order -> {
+                    navController.popBackStack(R.id.destination_order, false)
+                    navController.navigate(R.id.destination_order)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.destination_history -> {
+                    navController.popBackStack(R.id.destination_history, false)
+                    navController.navigate(R.id.destination_history)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.destination_serve -> {
+                    navController.popBackStack(R.id.destination_serve, false)
+                    navController.navigate(R.id.destination_serve)
+                    return@setOnNavigationItemSelectedListener true
+                }
+            }
+            false
+        }
+
     }
 
 

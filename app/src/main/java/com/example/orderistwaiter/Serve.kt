@@ -25,4 +25,7 @@ class Serve : Fragment() {
 
 
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+    }
 }
