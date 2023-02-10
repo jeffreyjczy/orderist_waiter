@@ -9,20 +9,21 @@ import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_history.*
 
 
-class Order : Fragment() {
+class HistoryTable : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        return inflater.inflate(R.layout.fragment_order, container, false)
+        return inflater.inflate(R.layout.fragment_history_table, container, false)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        }
 
-    }
+
 }
