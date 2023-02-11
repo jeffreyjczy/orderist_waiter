@@ -30,7 +30,7 @@ class OrderFragment : Fragment() {
         val tableArray = resources.getStringArray(R.array.tableDropdown)
         val t = inflater.inflate(R.layout.fragment_order, container, false)
         val spinner = t.findViewById<Spinner>(R.id.dropdownTable)
-        spinner?.adapter = activity?.applicationContext?.let { ArrayAdapter(it, androidx.transition.R.layout.support_simple_spinner_dropdown_item, tableArray) } as SpinnerAdapter
+        spinner?.adapter = activity?.applicationContext?.let { ArrayAdapter(it, R.layout.spinner_item, tableArray) } as SpinnerAdapter
         spinner?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
