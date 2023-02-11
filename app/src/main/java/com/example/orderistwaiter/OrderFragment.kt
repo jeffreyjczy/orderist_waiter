@@ -2,7 +2,6 @@ package com.example.orderistwaiter
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -64,11 +63,11 @@ class OrderFragment : Fragment() {
             "Jalebi",
             "Pizza Hawaiian"
         )
-        val qtyList = MutableList(menuList.size) { 0 }
+        var qtyList = MutableList(menuList.size) { 0 }
 
-        val orderView = t.findViewById<RecyclerView>(R.id.orderView)
-        orderView.layoutManager = LinearLayoutManager(context)
-        orderView.adapter = MenuAdapter(menuList, qtyList)
+        val menuView = t.findViewById<RecyclerView>(R.id.orderView)
+        menuView.layoutManager = LinearLayoutManager(context)
+        menuView.adapter = MenuAdapter(menuList, qtyList)
 
         // Submit btn
         val orderSubmitBtn = t.findViewById<Button>(R.id.orderSubmitBtn)
@@ -106,9 +105,16 @@ class OrderFragment : Fragment() {
                 val orderDialogConfirmBtn = orderDialog.findViewById<Button>(R.id.orderDialogConfirmBtn)
                 orderDialogConfirmBtn.setOnClickListener {
                     Log.d("Order", tableNo)
-                    for (i in qtyList.indices) {
-                        Log.d("Order", "${menuList[i]}: ${qtyList[i]}")
+                    for (i in filteredMenuList.indices) {
+                        Log.d("Order", "${filteredMenuList[i]}: ${filteredQtyList[i]}")
                     }
+                    Toast.makeText(activity,"Order Sent", Toast.LENGTH_LONG).show()
+                    orderDialog.dismiss()
+                    // reset page
+                    tableNo = ""
+                    spinner.setSelection(0);
+                    qtyList = MutableList(menuList.size) { 0 }
+                    menuView.adapter = MenuAdapter(menuList, qtyList)
                 }
             }
         }
