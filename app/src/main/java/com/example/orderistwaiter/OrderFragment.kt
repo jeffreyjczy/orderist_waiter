@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.order_row.view.*
+import kotlinx.android.synthetic.main.order_submission_dialog.*
 
 
 class OrderFragment : Fragment() {
@@ -91,6 +92,10 @@ class OrderFragment : Fragment() {
                 orderViewDialog.adapter = OrderAdapter(filteredMenuList, filteredQtyList)
 
                 val orderDialog = Dialog(requireContext())
+
+                val orderDialogTitle = dialogBinding.findViewById<TextView>(R.id.orderDialogTitle)
+                orderDialogTitle.text = tableNo
+
                 orderDialog.setContentView(dialogBinding)
                 orderDialog.setCancelable(true)
                 orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
