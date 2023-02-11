@@ -4,6 +4,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="tableDropdown">
+        <item>Select A Table</item>
         <item>Table 1</item>
         <item>Table 2</item>
         <item>Table 3</item>

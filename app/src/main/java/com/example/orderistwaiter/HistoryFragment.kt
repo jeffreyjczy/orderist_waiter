@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import kotlinx.android.synthetic.main.fragment_history.*
 
-class History : Fragment() {
+class HistoryFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +28,6 @@ class History : Fragment() {
         }
 
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

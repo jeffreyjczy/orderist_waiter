@@ -1,6 +1,10 @@
 package com.example.orderistwaiter
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,31 +26,28 @@ class OrderFragment : Fragment() {
     ): View {
 
         // Dropdown Table
+        var tableNo = ""
         val tableArray = resources.getStringArray(R.array.tableDropdown)
         val t = inflater.inflate(R.layout.fragment_order, container, false)
         val spinner = t.findViewById<Spinner>(R.id.dropdownTable)
         spinner?.adapter = activity?.applicationContext?.let { ArrayAdapter(it, androidx.transition.R.layout.support_simple_spinner_dropdown_item, tableArray) } as SpinnerAdapter
         spinner?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("erreur")
+
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val type = parent?.getItemAtPosition(position).toString()
-                Toast.makeText(activity,type, Toast.LENGTH_LONG).show()
-                println(type)
+                if (position == 0) {
+                    tableNo = ""
+                }
+                else {
+                    tableNo = parent?.getItemAtPosition(position).toString()
+                }
+
             }
 
         }
 
         // Order list View
-        val orderView = t.findViewById<RecyclerView>(R.id.orderView)
-        orderView.layoutManager = LinearLayoutManager(context)
-        orderView.adapter = MenuAdapter(sampleMessage())
-
-        return t
-    }
-
-    fun sampleMessage(): List<String> {
         val menuList = listOf(
             "Chicken Fried Rice",
             "Tomyam Kung",
@@ -55,37 +56,67 @@ class OrderFragment : Fragment() {
             "Kulche",
             "Dhoka",
             "Jalebi",
-            "Pizza Hawaiian",
-            "SomTam Thai",
-            "Masala Chai",
-            "Kulche",
-            "Dhoka",
-            "Jalebi",
-            "Pizza Hawaiian",
-            "SomTam Thai",
-            "Masala Chai",
-            "Kulche",
-            "Dhoka",
-            "Jalebi",
             "Pizza Hawaiian"
         )
-        return menuList
+        val qtyList = MutableList(menuList.size) { 0 }
+
+        val orderView = t.findViewById<RecyclerView>(R.id.orderView)
+        orderView.layoutManager = LinearLayoutManager(context)
+        orderView.adapter = MenuAdapter(menuList, qtyList)
+
+        // Submit btn
+        val orderSubmitBtn = t.findViewById<Button>(R.id.orderSubmitBtn)
+        orderSubmitBtn.setOnClickListener {
+            Log.d("Order", tableNo)
+            for (i in qtyList.indices) {
+                Log.d("Order", "${menuList[i]}: ${qtyList[i]}")
+            }
+            if (tableNo == "") {
+                Toast.makeText(activity,"Please Select A Table", Toast.LENGTH_LONG).show()
+            }
+            else {
+                // next Move
+            }
+        }
+
+
+
+        return t
     }
+
+
+
+
 
     inner class MenuHolder(view: View): RecyclerView.ViewHolder(view){
         val menuText = itemView.menuText
+        var quantityInput = itemView.quantityInput
+
 
     }
 
-    inner class MenuAdapter (var menuList: List<String>): RecyclerView.Adapter<MenuHolder>() {
+    inner class MenuAdapter (var menuList: List<String>, var qtyList: MutableList<Int>): RecyclerView.Adapter<MenuHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
             val view = layoutInflater.inflate(R.layout.order_row, parent, false)
             return MenuHolder(view)
         }
 
 
-        override fun onBindViewHolder(holder: MenuHolder, position: Int) {
+        override fun onBindViewHolder(holder: MenuHolder, @SuppressLint("RecyclerView") position: Int) {
             holder.menuText.text   = menuList[position]
+
+            holder.quantityInput.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                    val newValue = p0.toString().toIntOrNull()
+                    if (newValue != null) {
+                        qtyList[position] = newValue
+                    }
+                }
+                // other methods are not necessary for this example
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            })
+
         }
 
         override fun getItemCount(): Int {

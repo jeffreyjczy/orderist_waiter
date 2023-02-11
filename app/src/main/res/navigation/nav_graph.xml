@@ -11,7 +11,7 @@
         tools:layout="@layout/fragment_order" />
     <fragment
         android:id="@+id/destination_history"
-        android:name="com.example.orderistwaiter.History"
+        android:name="com.example.orderistwaiter.HistoryFragment"
         android:label="fragment_history"
         tools:layout="@layout/fragment_history" >
         <action
