@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_history.*
+import kotlinx.android.synthetic.main.history_row.*
 
 class HistoryFragment : Fragment() {
 
@@ -16,14 +19,27 @@ class HistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        return inflater.inflate(R.layout.fragment_history, container, false)
+        val t = inflater.inflate(R.layout.fragment_order, container, false)
+
+        // History table
+//        val orderList = listOf(
+////            Orders(1, ArrayList<Food>(Food(Menu("Chicken Fried Rice"), 1),)),
+//        )
+
+        val menuView = t.findViewById<RecyclerView>(R.id.orderView)
+        menuView.layoutManager = LinearLayoutManager(context)
+//        menuView.adapter = MenuAdapter(menuList, qtyList)
+
+
+
+        return t
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        historyTestBtn.setOnClickListener {
+        historyRow.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.destination_historyTable)
         }
 

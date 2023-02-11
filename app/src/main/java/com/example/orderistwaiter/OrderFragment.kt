@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.android.synthetic.main.order_row.view.*
 import kotlinx.android.synthetic.main.order_submission_dialog.*
+import com.google.gson.GsonBuilder
 
 
 class OrderFragment : Fragment() {
@@ -30,10 +31,12 @@ class OrderFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        // Dropdown Table
-        var tableNo = ""
-        val tableArray = resources.getStringArray(R.array.tableDropdown)
         val t = inflater.inflate(R.layout.fragment_order, container, false)
+
+        // Dropdown Table
+        var tableText = ""
+        var tableNo = 0
+        val tableArray = resources.getStringArray(R.array.tableDropdown)
         val spinner = t.findViewById<Spinner>(R.id.dropdownTable)
         spinner?.adapter = activity?.applicationContext?.let { ArrayAdapter(it, R.layout.spinner_item, tableArray) } as SpinnerAdapter
         spinner?.onItemSelectedListener = object :AdapterView.OnItemSelectedListener{
@@ -42,10 +45,11 @@ class OrderFragment : Fragment() {
             }
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position == 0) {
-                    tableNo = ""
+                    tableText = ""
                 }
                 else {
-                    tableNo = parent?.getItemAtPosition(position).toString()
+                    tableText = parent?.getItemAtPosition(position).toString()
+                    tableNo = position
                 }
 
             }
@@ -54,14 +58,14 @@ class OrderFragment : Fragment() {
 
         // Order list View
         val menuList = listOf(
-            "Chicken Fried Rice",
-            "Tomyam Kung",
-            "SomTam Thai",
-            "Masala Chai",
-            "Kulche",
-            "Dhoka",
-            "Jalebi",
-            "Pizza Hawaiian"
+            Menu("Chicken Fried Rice"),
+            Menu("Tomyam Kung"),
+            Menu("SomTam Thai"),
+            Menu("Masala Chai"),
+            Menu("Kulche"),
+            Menu("Dhoka"),
+            Menu("Jalebi"),
+            Menu("Pizza Hawaiian")
         )
         var qtyList = MutableList(menuList.size) { 0 }
 
@@ -73,7 +77,7 @@ class OrderFragment : Fragment() {
         val orderSubmitBtn = t.findViewById<Button>(R.id.orderSubmitBtn)
         orderSubmitBtn.setOnClickListener {
 
-            if (tableNo == "") {
+            if (tableText == "") {
                 Toast.makeText(activity,"Please Select A Table.", Toast.LENGTH_LONG).show()
             }
             else if (qtyList.reduce { acc, i -> acc + i } == 0) {
@@ -93,7 +97,7 @@ class OrderFragment : Fragment() {
                 val orderDialog = Dialog(requireContext())
 
                 val orderDialogTitle = dialogBinding.findViewById<TextView>(R.id.orderDialogTitle)
-                orderDialogTitle.text = tableNo
+                orderDialogTitle.text = tableText
 
                 orderDialog.setContentView(dialogBinding)
                 orderDialog.setCancelable(true)
@@ -104,14 +108,26 @@ class OrderFragment : Fragment() {
                 // Confirm button
                 val orderDialogConfirmBtn = orderDialog.findViewById<Button>(R.id.orderDialogConfirmBtn)
                 orderDialogConfirmBtn.setOnClickListener {
-                    Log.d("Order", tableNo)
+                    Log.d("Order", tableText)
+
+                    var order = Orders(tableNo, ArrayList<Food>())
+
                     for (i in filteredMenuList.indices) {
                         Log.d("Order", "${filteredMenuList[i]}: ${filteredQtyList[i]}")
+                        var food = Food(filteredMenuList[i].name, filteredQtyList[i])
+                        order.orders.add(food)
                     }
+
+
+                    val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+                    val jsonTutPretty: String = gsonPretty.toJson(order)
+                    println(jsonTutPretty)
+//                    Log.d("MyOrder",  order.toString())
+
                     Toast.makeText(activity,"Order Sent", Toast.LENGTH_LONG).show()
                     orderDialog.dismiss()
                     // reset page
-                    tableNo = ""
+                    tableText = ""
                     spinner.setSelection(0);
                     qtyList = MutableList(menuList.size) { 0 }
                     menuView.adapter = MenuAdapter(menuList, qtyList)
@@ -126,13 +142,13 @@ class OrderFragment : Fragment() {
         val menuText = itemView.menuText
         var quantityInput = itemView.quantityInput
     }
-    inner class MenuAdapter (var menuList: List<String>, var qtyList: MutableList<Int>): RecyclerView.Adapter<MenuHolder>() {
+    inner class MenuAdapter (var menuList: List<Menu>, var qtyList: MutableList<Int>): RecyclerView.Adapter<MenuHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
             val view = layoutInflater.inflate(R.layout.order_row, parent, false)
             return MenuHolder(view)
         }
         override fun onBindViewHolder(holder: MenuHolder, @SuppressLint("RecyclerView") position: Int) {
-            holder.menuText.text   = menuList[position]
+            holder.menuText.text   = menuList[position].name
 
             holder.quantityInput.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -154,14 +170,14 @@ class OrderFragment : Fragment() {
 
 
     // Order dialog recycler view
-    inner class OrderAdapter (var menuList: List<String>, var qtyList: List<Int>): RecyclerView.Adapter<MenuHolder>() {
+    inner class OrderAdapter (var menuList: List<Menu>, var qtyList: List<Int>): RecyclerView.Adapter<MenuHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
             val view = layoutInflater.inflate(R.layout.order_row, parent, false)
             return MenuHolder(view)
         }
         override fun onBindViewHolder(holder: MenuHolder, @SuppressLint("RecyclerView") position: Int) {
 
-            holder.menuText.text = menuList[position]
+            holder.menuText.text = menuList[position].name
             holder.quantityInput.setText(qtyList[position].toString())
             holder.quantityInput.inputType = InputType.TYPE_NULL
 
