@@ -17,8 +17,8 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_order.*
-import kotlinx.android.synthetic.main.order_row.view.*
-import kotlinx.android.synthetic.main.order_submission_dialog.*
+import kotlinx.android.synthetic.main.row_order.view.*
+import kotlinx.android.synthetic.main.dialog_order_submission.*
 import com.google.gson.GsonBuilder
 
 
@@ -85,7 +85,7 @@ class OrderFragment : Fragment() {
             }
             else {
                 // Pop Up dialog
-                val dialogBinding = layoutInflater.inflate(R.layout.order_submission_dialog,null)
+                val dialogBinding = layoutInflater.inflate(R.layout.dialog_order_submission,null)
 
                 //order List View
                 val orderViewDialog = dialogBinding.findViewById<RecyclerView>(R.id.orderViewDialog)
@@ -144,7 +144,7 @@ class OrderFragment : Fragment() {
     }
     inner class MenuAdapter (var menuList: List<Menu>, var qtyList: MutableList<Int>): RecyclerView.Adapter<MenuHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
-            val view = layoutInflater.inflate(R.layout.order_row, parent, false)
+            val view = layoutInflater.inflate(R.layout.row_order, parent, false)
             return MenuHolder(view)
         }
         override fun onBindViewHolder(holder: MenuHolder, @SuppressLint("RecyclerView") position: Int) {
@@ -172,7 +172,7 @@ class OrderFragment : Fragment() {
     // Order dialog recycler view
     inner class OrderAdapter (var menuList: List<Menu>, var qtyList: List<Int>): RecyclerView.Adapter<MenuHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
-            val view = layoutInflater.inflate(R.layout.order_row, parent, false)
+            val view = layoutInflater.inflate(R.layout.row_order, parent, false)
             return MenuHolder(view)
         }
         override fun onBindViewHolder(holder: MenuHolder, @SuppressLint("RecyclerView") position: Int) {
