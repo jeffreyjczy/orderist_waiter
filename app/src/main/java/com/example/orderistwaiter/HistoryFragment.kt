@@ -108,7 +108,7 @@ class HistoryFragment : Fragment() {
 
             holder.historyDialogMenu.text   = orderList[position].name
             holder.historyDialogQuantity.text   = orderList[position].quantity.toString()
-            holder.historyDialogStatus.text   = if (orderList[position].status) "Served" else "Pending"
+            holder.historyDialogStatus.text   =  orderList[position].status
 
 
         }
