@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -99,7 +100,10 @@ class OrderFragment : Fragment() {
                 val orderDialogTitle = dialogBinding.findViewById<TextView>(R.id.orderDialogTitle)
                 orderDialogTitle.text = tableText
 
+
+//                orderDialog.setContentView(R.layout.dialog_order_submission)
                 orderDialog.setContentView(dialogBinding)
+                orderDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
                 orderDialog.setCancelable(true)
                 orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 orderDialog.show()

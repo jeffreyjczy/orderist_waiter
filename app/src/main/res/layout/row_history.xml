@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/historyRow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,12 +18,14 @@
             android:id="@+id/historyText"
             android:layout_width="308dp"
             android:layout_height="match_parent"
-            android:text="TextView" />
+            android:paddingStart="10sp"
+            android:text="TextView"
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             app:srcCompat="@drawable/arrow___right_2" />
     </LinearLayout>

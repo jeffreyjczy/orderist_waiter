@@ -7,30 +7,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/menuText"
             android:layout_width="500dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/my_custom_background"
             android:paddingStart="10dp"
             android:text="TextView"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/quantityInput"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/my_custom_background"
             android:ems="10"
             android:hint="0"
             android:inputType="number"
             android:outlineProvider="paddedBounds"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

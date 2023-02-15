@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -104,7 +105,9 @@ class ServeFragment : Fragment() {
                     confirmationTitle.text = "Already Served"
                     confirmationDescription.text = serveOrders[position].food.name + "has been successfully served to table "+ serveOrders[position].tableNo.toString()+"?"
                 }
-                orderDialog.setContentView(dialogBinding)
+
+                orderDialog.setContentView(R.layout.dialog_confirmation)
+                orderDialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
                 orderDialog.setCancelable(true)
                 orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 orderDialog.show()
