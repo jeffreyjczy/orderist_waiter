@@ -13,6 +13,10 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.row_history.*
 import kotlinx.android.synthetic.main.row_history.view.*
@@ -30,20 +34,55 @@ class HistoryFragment : Fragment() {
         val t = inflater.inflate(R.layout.fragment_history, container, false)
 
         // History table
-        val orderList = mutableListOf <Orders>()
-        orderList.add(Orders(1, arrayListOf(Food("Chicken Fried Rice", 1))))
-        orderList.add(Orders(2, arrayListOf(Food("Beef Noodle Soup", 2), Food("Egg Fried Rice", 1))))
-        orderList.add(Orders(3, arrayListOf(Food("Vegetable Stir Fry", 3), Food("Steamed Rice", 1),Food("Beef Noodle Soup", 2))))
+//        val orderList = mutableListOf <Orders>()
+//        orderList.add(Orders(1, arrayListOf(Food("Chicken Fried Rice", 1))))
+//        orderList.add(Orders(2, arrayListOf(Food("Beef Noodle Soup", 2), Food("Egg Fried Rice", 1))))
+//        orderList.add(Orders(3, arrayListOf(Food("Vegetable Stir Fry", 3), Food("Steamed Rice", 1),Food("Beef Noodle Soup", 2))))
 
-        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
-        val jsonTutPretty: String = gsonPretty.toJson(orderList)
-        println(jsonTutPretty)
-        println(orderList.size)
+        val database = FirebaseDatabase.getInstance()
+        val myOrdersRef = database.getReference("Orders")
+        val myMenuRef = database.getReference("Menus")
 
 
+//        val gsonPretty = GsonBuilder().setPrettyPrinting().create()
+//        val jsonTutPretty: String = gsonPretty.toJson(orderList)
+//        println(jsonTutPretty)
+//        println(orderList.size)
+
+
+//        val historyView = t.findViewById<RecyclerView>(R.id.historyView)
+//        historyView.layoutManager = LinearLayoutManager(context)
+//        historyView.adapter = HistoryAdapter(orderList)
+        val orderList = ArrayList<Orders>()
+        val adapter = HistoryAdapter(orderList)
         val historyView = t.findViewById<RecyclerView>(R.id.historyView)
         historyView.layoutManager = LinearLayoutManager(context)
-        historyView.adapter = HistoryAdapter(orderList)
+        historyView.adapter = adapter
+
+        myOrdersRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Clear the current list of menus
+                orderList.clear()
+
+                // Get list of Menu objects from the dataSnapshot
+                for (childSnapshot in dataSnapshot.children) {
+                    val order = childSnapshot.getValue(Orders::class.java)
+                    if (order != null) {
+                        order.id = childSnapshot.key.toString()
+                        if (order.orders.any { it?.status != "Complete" }) {
+                            orderList.add(order)
+                        }
+                    }
+                }
+
+                // Notify the adapter that the data has changed
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle the error
+            }
+        })
 
 
 
@@ -54,7 +93,7 @@ class HistoryFragment : Fragment() {
         val historyText = itemView.historyText
         val historyTableNo = itemView.historyRow
     }
-    inner class HistoryAdapter (var orderList: List<Orders>): RecyclerView.Adapter<HistoryFragment.HistoryHolder>() {
+    inner class HistoryAdapter (var orderList: ArrayList<Orders>): RecyclerView.Adapter<HistoryFragment.HistoryHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryFragment.HistoryHolder {
             val view = layoutInflater.inflate(R.layout.row_history, parent, false)
             return HistoryHolder(view)
@@ -102,7 +141,7 @@ class HistoryFragment : Fragment() {
         var historyDialogStatus = itemView.historyDialogStatus
 
     }
-    inner class HistoryDialogAdapter (var orderList: List<Food>): RecyclerView.Adapter<HistoryDialogHolder>() {
+    inner class HistoryDialogAdapter (var orderList: ArrayList<Food>): RecyclerView.Adapter<HistoryDialogHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryDialogHolder {
             val view = layoutInflater.inflate(R.layout.row_history_dialog, parent, false)
             return HistoryDialogHolder(view)

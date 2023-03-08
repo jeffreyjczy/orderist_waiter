@@ -1,6 +1,7 @@
 package com.example.orderistwaiter
 
-class Orders (
+data class Orders (
     val tableNo: Int = 0,
-    val orders: ArrayList<Food>
+    val orders: ArrayList<Food> = ArrayList<Food>(),
+    var id: String =""
 )

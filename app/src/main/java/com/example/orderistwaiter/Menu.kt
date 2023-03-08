@@ -1,6 +1,7 @@
 package com.example.orderistwaiter
 
-class Menu (
-    val name: String = ""
-//val isVisible: Boolean
-        )
+data class Menu (
+    var name: String? = "",
+    var isVisible: Boolean? = true,
+    var id: String? =""
+)
