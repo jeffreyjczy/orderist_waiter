@@ -84,8 +84,13 @@ class OrderFragment : Fragment() {
                 for (childSnapshot in dataSnapshot.children) {
                     val menu = childSnapshot.getValue(Menu::class.java)
                     menu?.id = childSnapshot.key
-                    menuList.add(menu!!)
-                    qtyList.add(0)
+                    if (menu != null) {
+                        if (menu.isVisible == true) {
+                            menuList.add(menu!!)
+                            qtyList.add(0)
+                        }
+                    }
+
                 }
 
                 // Notify the adapter that the data has changed
