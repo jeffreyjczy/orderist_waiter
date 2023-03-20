@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="TextView"
             android:textSize="16sp" />
 
@@ -25,6 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="TextView"
             android:textSize="16sp" />
 
@@ -33,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="TextView"
             android:textSize="16sp" />
 
@@ -40,6 +43,7 @@
             android:id="@+id/serveAct"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             app:srcCompat="@drawable/tick_square" />
 
