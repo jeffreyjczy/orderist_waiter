@@ -45,7 +45,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            app:srcCompat="@drawable/tick_square" />
+            app:srcCompat="@drawable/tick_square"
+            android:background="@color/background"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
